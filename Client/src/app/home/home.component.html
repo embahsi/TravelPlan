@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="navbar">
+    <div>Trip Planner</div>
+    <div *ngIf="contextService.IsAdmin()">
+        <a routerLink='/home/trip' routerLinkActive='active'>Trips</a>
+        <a routerLink='/home/usermanagement' routerLinkActive='active'>User Management</a>
+    </div>
+    <a (click)="onLogout()">Logout</a>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+

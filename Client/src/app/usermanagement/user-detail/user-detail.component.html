@@ -1,0 +1,66 @@
+<mat-card class="loginCard">
+    <mat-card-content>
+        <form autocomplete="off" [formGroup]="userService.formModel" (submit)="onSubmit()">
+            <div class="controles-container">
+                <input type="hidden" formControlName="Id">
+                <mat-form-field>
+                    <input formControlName="UserName" matInput placeholder="UserName">
+                    <mat-error
+                        *ngIf="userService.formModel.get('UserName').touched && userService.formModel.get('UserName').errors?.required">
+                        UserName is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="Email" matInput placeholder="Email">
+                    <mat-error
+                        *ngIf="userService.formModel.get('Email').touched && userService.formModel.get('Email').errors?.email">
+                        Invalid email address
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="FirstName" matInput placeholder="First Name">
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="LastName" matInput placeholder="Last Name">
+                </mat-form-field>
+                <mat-form-field *ngIf="contextService.isUserManagerOrAdmin()">
+                    <mat-select formControlName="Role" placeholder="Role" [(value)]="userService.formModel.value.Role">
+                        <ng-container *ngFor="let role of userService.roles">
+                            <mat-option value="{{role.value}}">{{role.value}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <div *ngIf="this.showPassword" formGroupName="Passwords" #Passwords>
+                    <mat-form-field>
+                        <input type="password" formControlName="Password" matInput placeholder="Password">
+                        <mat-error
+                            *ngIf="userService.formModel.get('Passwords.Password').touched && userService.formModel.get('Passwords.Password').errors?.required">
+                            Password is required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="userService.formModel.get('Passwords.Password').touched && userService.formModel.get('Passwords.Password').errors?.minlength">
+                            Minimum 6 characters required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input type="password" formControlName="ConfirmPassword" matInput
+                            placeholder="Confirm Password">
+                        <mat-error
+                            *ngIf="userService.formModel.get('Passwords.ConfirmPassword').touched && userService.formModel.get('Passwords.ConfirmPassword').errors?.required">
+                            Confirming password is required
+                        </mat-error>
+                        <mat-error
+                            *ngIf="userService.formModel.get('Passwords.ConfirmPassword').touched && userService.formModel.get('Passwords.ConfirmPassword').errors?.passwordMismatch">
+                            Confirm Password does not match
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="button-row">
+                    <button mat-raised-button color="primary" type="submit"
+                        [disabled]="userService.formModel.invalid">{{submitText}}</button>
+                    <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

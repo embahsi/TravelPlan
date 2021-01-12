@@ -1,0 +1,9 @@
+<mat-toolbar color="white">Trips</mat-toolbar>
+<mat-grid-list cols="8" rowHeight="900px">
+  <mat-grid-tile [colspan]=3>
+    <app-trip-detail [ngClass]="{'innerComponent1': true}"></app-trip-detail>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]=5>
+    <app-trip-list [ngClass]="{'innerComponent1': true}"></app-trip-list>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,76 @@
+<div class="mat-elevation-z8">
+    <div class="filter-div">
+        <mat-form-field class="filter-input">
+            <input matInput type="text" placeholder="Destination" [(ngModel)]='destionationFilter'
+                (ngModelChange)="filter()" />
+        </mat-form-field>
+    
+        <mat-form-field class="filter-input">
+            <input matInput [matDatepicker]="picker" placeholder="Start Date" [(ngModel)]='startDateFilter'
+                (ngModelChange)="filter()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    
+        <mat-form-field class="filter-input">
+            <input matInput [matDatepicker]="picker1" placeholder="End Date" [(ngModel)]='endDateFilter'
+                (ngModelChange)="filter()">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+    
+        <mat-form-field class="filter-input">
+            <input matInput type="text" placeholder="Comment" [(ngModel)]='commentFilter' (ngModelChange)="filter()" />
+        </mat-form-field>
+    </div>
+    
+    <mat-table [dataSource]="filteredTripList">
+        <ng-container matColumnDef="Destination">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Destination</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Destination}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="StartDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>StartDate</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.StartDate | date: 'dd-MM-yyyy'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="EndDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>EndDate</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.EndDate | date: 'dd-MM-yyyy'}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Comment">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Comment</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Comment}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="UserName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>UserName</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.ApplicationUser.UserName}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="populateForm(row)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="onDelete(row)">
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                Loading data...
+            </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':filteredTripList!=undefined}">
+        </mat-footer-row>
+        <mat-footer-row *matFooterRowDef="['noData']"
+            [ngClass]="{'hide':!(filteredTripList!=undefined && filteredTripList.length==0)}"></mat-footer-row>
+    </mat-table>
+</div>

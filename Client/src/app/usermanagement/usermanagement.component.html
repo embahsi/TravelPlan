@@ -1,0 +1,9 @@
+<mat-toolbar color="white">User Management</mat-toolbar>
+<mat-grid-list cols="8" rowHeight="900px">
+  <mat-grid-tile [colspan]=3>
+    <app-user-detail [ngClass]="{'innerComponent1': true}"></app-user-detail>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]=5>
+    <app-user-list [ngClass]="{'innerComponent1': true}"></app-user-list>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,51 @@
+<mat-card class="loginCard">
+    <mat-card-content>
+        <form autocomplete="off" [formGroup]="tripService.formModel" (submit)="onSubmit()">
+            <div class="controles-container">
+                <input type="hidden" formControlName="Id">
+                <mat-form-field *ngIf="contextService.IsAdmin()">
+                    <mat-select formControlName="ApplicationUser" placeholder="User"
+                        [(value)]="tripService.formModel.value.ApplicationUser" [compareWith]="compareUser">
+                        <ng-container *ngFor="let user of userService.userRoleUsers">
+                            <mat-option [value]="user">{{user.UserName}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="Destination" matInput placeholder="Destination">
+                    <mat-error
+                        *ngIf="tripService.formModel.get('Destination').touched && tripService.formModel.get('Destination').errors?.required">
+                        Destination is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="StartDate" matInput [matDatepicker]="picker" placeholder="Start Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                        *ngIf="tripService.formModel.get('StartDate').touched && tripService.formModel.get('StartDate').errors?.required">
+                        Start Date is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="EndDate" matInput [matDatepicker]="picker2" placeholder="End Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error
+                        *ngIf="tripService.formModel.get('EndDate').touched && tripService.formModel.get('EndDate').errors?.required">
+                        End Date is required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Comment</mat-label>
+                    <textarea rows="6" formControlName="Comment" matInput></textarea>
+                </mat-form-field>
+            </div>
+            <div class="button-row">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="tripService.formModel.invalid">{{submitText}}</button>
+                <button mat-raised-button color="warn" type="button" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

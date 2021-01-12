@@ -1,0 +1,11 @@
+<div class="logindiv">
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link routerLink="/user/login" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">Sign In</a>
+      <a mat-tab-link routerLink="/user/register" routerLinkActive #rla1="routerLinkActive" [active]="rla1.isActive">Sign Up</a>
+    </nav>
+  
+    <router-outlet></router-outlet>
+  
+</div>
+
+  
